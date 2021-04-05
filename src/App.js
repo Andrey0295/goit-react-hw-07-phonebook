@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import contactsOperations from './redux/contacts/contacts-operations';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Container from './components/Container/Container';
+import ContactForm from './components/ContactForm/ContactForm';
+import ContactList from './components/ContactList/ContactList';
+import Filter from './components/Filter/Filter';
+
+import styles from './App.module.css';
+
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchContacts();
+  }
+  render() {
+    return (
+      <Container>
+        <div className={styles.mainBlock}>
+          <div>
+            <h1>Phonebook</h1>
+            <ContactForm onSubmit={this.handleContactsData} />
+          </div>
+
+          <div className={styles.contactsBlock}>
+            <h1>Contacts</h1>
+
+            <Filter />
+            <ContactList />
+          </div>
+        </div>
+      </Container>
+    );
+  }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
+});
+
+export default connect(null, mapDispatchToProps)(App);
