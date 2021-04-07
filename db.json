@@ -1,9 +1,3 @@
 {
-  "contacts": [
-    {
-      "name": "Sergey",
-      "number": "",
-      "id": 3
-    }
-  ]
+  "contacts": []
 }
